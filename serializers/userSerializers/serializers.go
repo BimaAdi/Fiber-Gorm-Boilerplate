@@ -22,6 +22,14 @@ type UserRequestSerializer struct {
 	IsAdmin         bool   `json:"is_admin" validate:"eq=True|eq=False"`
 }
 
+type UserUpdateRequestSerializer struct {
+	Username        string `json:"username" validate:"required,email,min=6,max=32"`
+	OldPassword     string `json:"old_password" validate:"required,min=6,max=32"`
+	NewPassword     string `json:"new_password" validate:"required,min=6,max=32"`
+	ConfirmPassword string `json:"confirm_password" validate:"required,eqfield=NewPassword"`
+	IsAdmin         bool   `json:"is_admin" validate:"eq=True|eq=False"`
+}
+
 type UserResponseSerializer struct {
 	Id       int    `json:"id"`
 	Username string `json:"username"`
@@ -42,6 +50,22 @@ type ErrorResponse struct {
 }
 
 func ValidateUser(user UserRequestSerializer) []*ErrorResponse {
+	var errors []*ErrorResponse
+	validate := validator.New()
+	err := validate.Struct(user)
+	if err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			var element ErrorResponse
+			element.FailedField = err.StructNamespace()
+			element.Tag = err.Tag()
+			element.Value = err.Param()
+			errors = append(errors, &element)
+		}
+	}
+	return errors
+}
+
+func ValidateupdateUser(user UserUpdateRequestSerializer) []*ErrorResponse {
 	var errors []*ErrorResponse
 	validate := validator.New()
 	err := validate.Struct(user)

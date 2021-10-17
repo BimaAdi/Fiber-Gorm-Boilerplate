@@ -84,11 +84,11 @@ func UpdateUserRoute(c *fiber.Ctx) error {
 	}
 
 	// get json and validate
-	requestFormat := new(userserializers.UserRequestSerializer)
+	requestFormat := new(userserializers.UserUpdateRequestSerializer)
 	if err := c.BodyParser(requestFormat); err != nil {
 		return err
 	}
-	errors := userserializers.ValidateUser(*requestFormat)
+	errors := userserializers.ValidateupdateUser(*requestFormat)
 	if errors != nil {
 		return c.Status(400).JSON(errors)
 
@@ -100,6 +100,10 @@ func UpdateUserRoute(c *fiber.Ctx) error {
 		if err.Error() == "record not found" {
 			return c.Status(404).JSON(fiber.Map{
 				"message": "Data not found",
+			})
+		} else if err.Error() == "wrong password" {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "wrong password",
 			})
 		} else {
 			return c.Status(500).JSON(fiber.Map{

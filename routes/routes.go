@@ -3,6 +3,7 @@ package routes
 import (
 	"fmt"
 
+	authroutes "github.com/BimaAdi/fiberPostgresqlBoilerPlate/routes/authRoutes"
 	userroutes "github.com/BimaAdi/fiberPostgresqlBoilerPlate/routes/userRoutes"
 	"github.com/gofiber/fiber/v2"
 )
@@ -17,6 +18,10 @@ func Initiate(app *fiber.App) *fiber.App {
 	userRoutes.Post("/", userroutes.CreateUserRoute)
 	userRoutes.Put("/:id", userroutes.UpdateUserRoute)
 	userRoutes.Delete("/:id", userroutes.DeleteUserRoute)
+
+	authRoutes := app.Group(("/auth"))
+	authRoutes.Post("/login", authroutes.LoginRoute)
+	authRoutes.Post("/logout", authroutes.LogoutRoute)
 
 	return app
 }

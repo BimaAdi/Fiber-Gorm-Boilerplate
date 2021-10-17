@@ -1,11 +1,13 @@
 package userservices
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 
 	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
 	userserializers "github.com/BimaAdi/fiberPostgresqlBoilerPlate/serializers/userSerializers"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func GetAllUserService(page int, size int) (*userserializers.UserPaginationResponseSerializer, error) {
@@ -48,6 +50,14 @@ func GetDetailUserService(id int) (*userserializers.UserResponseSerializer, erro
 }
 
 func CreateUserService(serializer userserializers.UserRequestSerializer) (*userserializers.UserResponseSerializer, error) {
+	// hash the password using bcrypt
+	bytesPassword, err := bcrypt.GenerateFromPassword([]byte(serializer.Password), 0)
+	if err != nil {
+		return nil, err
+	}
+	serializer.Password = string(bytesPassword)
+
+	// save new user
 	newUser := userserializers.UserRequestSerializerToUserModel(serializer)
 	if err := models.DBConn.Create(&newUser).Error; err != nil {
 		return nil, err
@@ -58,17 +68,28 @@ func CreateUserService(serializer userserializers.UserRequestSerializer) (*users
 	return &response, nil
 }
 
-func UpdateUserService(id int, serializer userserializers.UserRequestSerializer) (*userserializers.UserResponseSerializer, error) {
+func UpdateUserService(id int, serializer userserializers.UserUpdateRequestSerializer) (*userserializers.UserResponseSerializer, error) {
 	// check is User exist
 	updatedUser := models.User{}
 	if err := models.DBConn.First(&updatedUser, id).Error; err != nil {
 		return nil, err
 	}
 
+	// Check is Old Password correct
+	if bcrypt.CompareHashAndPassword([]byte(updatedUser.Password), []byte(serializer.OldPassword)) != nil {
+		return nil, errors.New("wrong password")
+	}
+
+	// Encrypt the password
+	bytesPassword, err := bcrypt.GenerateFromPassword([]byte(serializer.NewPassword), 0)
+	if err != nil {
+		return nil, err
+	}
+
 	// Update the data
 	updatedUser.Username = serializer.Username
 	updatedUser.IsAdmin = serializer.IsAdmin
-	updatedUser.Password = serializer.Password
+	updatedUser.Password = string(bytesPassword)
 	if err := models.DBConn.Save(updatedUser).Error; err != nil {
 		return nil, err
 	}
