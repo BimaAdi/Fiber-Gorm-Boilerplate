@@ -2,7 +2,7 @@ package common
 
 import (
 	"errors"
-	"fmt"
+	"os"
 	"strings"
 
 	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
@@ -14,7 +14,8 @@ func GenerateJWTToken(user models.User) ([]byte, error) {
 	token := jwt.New()
 	token.Set("id", user.ID)
 	token.Set("username", user.Username)
-	signedToken, err := jwt.Sign(token, jwa.HS512, []byte("qwerty"))
+	jwtSecret := os.Getenv("JWT_SECRET")
+	signedToken, err := jwt.Sign(token, jwa.HS512, []byte(jwtSecret))
 	if err != nil {
 		return nil, err
 	}
@@ -30,10 +31,10 @@ func ValidateJWTToken(authorizationToken string) (*models.User, error) {
 		return nil, errors.New("invalid token")
 	}
 	jwtToken := words[1]
-	fmt.Println(jwtToken)
 
 	// validate jwt token
-	resultToken, err := jwt.Parse([]byte(jwtToken), jwt.WithVerify(jwa.HS512, []byte("qwerty")))
+	jwtSecret := os.Getenv("JWT_SECRET")
+	resultToken, err := jwt.Parse([]byte(jwtToken), jwt.WithVerify(jwa.HS512, []byte(jwtSecret)))
 	if err != nil {
 		return nil, errors.New("invalid token")
 	}

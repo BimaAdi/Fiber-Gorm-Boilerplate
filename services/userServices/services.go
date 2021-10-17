@@ -3,7 +3,9 @@ package userservices
 import (
 	"errors"
 	"fmt"
+	"os"
 	"reflect"
+	"strconv"
 
 	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
 	userserializers "github.com/BimaAdi/fiberPostgresqlBoilerPlate/serializers/userSerializers"
@@ -51,7 +53,11 @@ func GetDetailUserService(id int) (*userserializers.UserResponseSerializer, erro
 
 func CreateUserService(serializer userserializers.UserRequestSerializer) (*userserializers.UserResponseSerializer, error) {
 	// hash the password using bcrypt
-	bytesPassword, err := bcrypt.GenerateFromPassword([]byte(serializer.Password), 0)
+	bcryptCost, err := strconv.Atoi(os.Getenv("BCRYPT_COST"))
+	if err != nil {
+		return nil, err
+	}
+	bytesPassword, err := bcrypt.GenerateFromPassword([]byte(serializer.Password), bcryptCost)
 	if err != nil {
 		return nil, err
 	}
@@ -80,8 +86,12 @@ func UpdateUserService(id int, serializer userserializers.UserUpdateRequestSeria
 		return nil, errors.New("wrong password")
 	}
 
-	// Encrypt the password
-	bytesPassword, err := bcrypt.GenerateFromPassword([]byte(serializer.NewPassword), 0)
+	// Hash the password using bcrypt
+	bcryptCost, err := strconv.Atoi(os.Getenv("BCRYPT_COST"))
+	if err != nil {
+		return nil, err
+	}
+	bytesPassword, err := bcrypt.GenerateFromPassword([]byte(serializer.NewPassword), bcryptCost)
 	if err != nil {
 		return nil, err
 	}
