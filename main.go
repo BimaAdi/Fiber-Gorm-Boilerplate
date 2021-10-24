@@ -29,5 +29,5 @@ func main() {
 
 	// start server
 	fmt.Println("Start the server")
-	app.Listen(":3000")
+	app.Listen(":" + os.Getenv("SERVER_PORT"))
 }
