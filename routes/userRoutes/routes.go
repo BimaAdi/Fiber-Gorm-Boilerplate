@@ -3,6 +3,7 @@ package userroutes
 import (
 	"strconv"
 
+	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
 	userserializers "github.com/BimaAdi/fiberPostgresqlBoilerPlate/serializers/userSerializers"
 	userservices "github.com/BimaAdi/fiberPostgresqlBoilerPlate/services/userServices"
 	"github.com/gofiber/fiber/v2"
@@ -18,7 +19,8 @@ func GetAllUserRoute(c *fiber.Ctx) error {
 		})
 	}
 
-	response, err := userservices.GetAllUserService(query.Page, query.Size)
+	userRepo := models.User{}
+	response, err := userservices.GetAllUserService(userRepo, query.Page, query.Size)
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
 			"message": err.Error(),
@@ -35,7 +37,8 @@ func GetDetailUserRoute(c *fiber.Ctx) error {
 		})
 	}
 
-	response, err := userservices.GetDetailUserService(idInt)
+	userRepo := models.User{}
+	response, err := userservices.GetDetailUserService(userRepo, idInt)
 	if err != nil {
 		if err.Error() == "record not found" {
 			return c.Status(404).JSON(fiber.Map{
@@ -64,7 +67,8 @@ func CreateUserRoute(c *fiber.Ctx) error {
 
 	}
 
-	new_user, err := userservices.CreateUserService(*requestFormat)
+	userRepo := models.User{}
+	new_user, err := userservices.CreateUserService(userRepo, *requestFormat)
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
 			"message": err.Error(),
@@ -95,7 +99,8 @@ func UpdateUserRoute(c *fiber.Ctx) error {
 	}
 
 	// update user
-	response, err := userservices.UpdateUserService(idInt, *requestFormat)
+	userRepo := models.User{}
+	response, err := userservices.UpdateUserService(userRepo, idInt, *requestFormat)
 	if err != nil {
 		if err.Error() == "record not found" {
 			return c.Status(404).JSON(fiber.Map{
@@ -123,7 +128,8 @@ func DeleteUserRoute(c *fiber.Ctx) error {
 		})
 	}
 
-	if err := userservices.DeleteUserService(idInt); err != nil {
+	userRepo := models.User{}
+	if err := userservices.DeleteUserService(userRepo, idInt); err != nil {
 		if err.Error() == "record not found" {
 			return c.Status(404).JSON(fiber.Map{
 				"message": "Data not found",

@@ -36,7 +36,7 @@ func TestUserModelToUserResponseSerializer(t *testing.T) {
 		IsAdmin:  false,
 	}
 
-	output := userserializers.UserModelToUserResponseSerializer(input)
+	output := userserializers.UserModelToUserResponseSerializer(&input)
 
 	// Id, Username and IsAdmin should return same value
 	assert.Equal(t, int(input.ID), int(output.Id),
@@ -82,7 +82,7 @@ func TestManyUserModelToUserResponseSerializer(t *testing.T) {
 	inputSize := 3
 	inputNumData := 10
 
-	output := userserializers.ManyUserModelToUserResponseSerializer(input, inputPage, inputSize, inputNumData)
+	output := userserializers.ManyUserModelToUserResponseSerializer(&input, inputPage, inputSize, &inputNumData)
 
 	// Check value
 	assert.Equal(t, inputPage, output.Page)

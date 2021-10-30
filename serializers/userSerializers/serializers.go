@@ -89,7 +89,7 @@ func UserRequestSerializerToUserModel(serializer UserRequestSerializer) models.U
 	}
 }
 
-func UserModelToUserResponseSerializer(model models.User) UserResponseSerializer {
+func UserModelToUserResponseSerializer(model *models.User) UserResponseSerializer {
 	return UserResponseSerializer{
 		Id:       int(model.ID),
 		Username: model.Username,
@@ -97,9 +97,9 @@ func UserModelToUserResponseSerializer(model models.User) UserResponseSerializer
 	}
 }
 
-func ManyUserModelToUserResponseSerializer(manyModel []models.User, page int, size int, numData int) UserPaginationResponseSerializer {
+func ManyUserModelToUserResponseSerializer(manyModel *[]models.User, page int, size int, numData *int) UserPaginationResponseSerializer {
 	userSerializers := []UserResponseSerializer{}
-	for _, item := range manyModel {
+	for _, item := range *manyModel {
 		userSerializers = append(userSerializers, UserResponseSerializer{
 			Id:       int(item.ID),
 			Username: item.Username,
@@ -110,7 +110,7 @@ func ManyUserModelToUserResponseSerializer(manyModel []models.User, page int, si
 	response := UserPaginationResponseSerializer{
 		Page:    page,
 		Size:    size,
-		NumPage: int(math.Ceil((float64(numData) / float64(size)))),
+		NumPage: int(math.Ceil((float64(*numData) / float64(size)))),
 		Data:    userSerializers,
 	}
 
