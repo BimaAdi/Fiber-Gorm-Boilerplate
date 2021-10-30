@@ -6,4 +6,5 @@ type UserInterface interface {
 	CreateUser(user User) (*User, error)
 	UpdateUser(user User, id int) (*User, error)
 	DeleteUser(id int) error
+	GetDetailUserByUsername(username string) (*User, error)
 }

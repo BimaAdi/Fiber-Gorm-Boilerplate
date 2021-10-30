@@ -33,3 +33,8 @@ func (m MockedUser) DeleteUser(id int) error {
 	args := m.Called(id)
 	return args.Error(0)
 }
+
+func (m MockedUser) GetDetailUserByUsername(username string) (*User, error) {
+	args := m.Called(username)
+	return args.Get(0).(*User), args.Error(1)
+}

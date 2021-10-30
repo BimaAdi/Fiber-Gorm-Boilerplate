@@ -56,3 +56,10 @@ func (user User) DeleteUser(id int) error {
 	}
 	return nil
 }
+
+func (user User) GetDetailUserByUsername(username string) (*User, error) {
+	if err := DBConn.First(&user, "username = ?", username).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

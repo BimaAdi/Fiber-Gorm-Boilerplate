@@ -9,10 +9,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func LoginService(username string, password string) (*authserializers.LoginSuccessSerializer, error) {
-	// find the user
-	user := models.User{}
-	if err := models.DBConn.First(&user, "username = ?", username).Error; err != nil {
+func LoginService(ui models.UserInterface, username string, password string) (*authserializers.LoginSuccessSerializer, error) {
+	user, err := ui.GetDetailUserByUsername(username)
+	if err != nil {
 		return nil, err
 	}
 
@@ -21,13 +20,13 @@ func LoginService(username string, password string) (*authserializers.LoginSucce
 		return nil, errors.New("wrong password")
 	}
 
-	signedToken, err := common.GenerateJWTToken(user)
+	signedToken, err := common.GenerateJWTToken(*user)
 	if err != nil {
 		return nil, err
 	}
 
 	// serialize user model
-	serializer := authserializers.UserModelToLoginSuccessSerializer(user, signedToken)
+	serializer := authserializers.UserModelToLoginSuccessSerializer(*user, signedToken)
 
 	return &serializer, nil
 }

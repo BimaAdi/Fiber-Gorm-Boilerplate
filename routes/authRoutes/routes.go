@@ -2,6 +2,7 @@ package authroutes
 
 import (
 	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/common"
+	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
 	authserializers "github.com/BimaAdi/fiberPostgresqlBoilerPlate/serializers/authSerializers"
 	authservices "github.com/BimaAdi/fiberPostgresqlBoilerPlate/services/authServices"
 	"github.com/gofiber/fiber/v2"
@@ -14,7 +15,8 @@ func LoginRoute(c *fiber.Ctx) error {
 		return err
 	}
 
-	res, err := authservices.LoginService(requestFormat.Username, requestFormat.Password)
+	userRepo := models.User{}
+	res, err := authservices.LoginService(userRepo, requestFormat.Username, requestFormat.Password)
 	if err != nil {
 		if err.Error() == "record not found" || err.Error() == "wrong password" {
 			return c.Status(400).JSON(fiber.Map{
