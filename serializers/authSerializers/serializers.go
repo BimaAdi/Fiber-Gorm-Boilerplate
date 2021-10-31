@@ -1,6 +1,6 @@
 package authserializers
 
-import "github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
+import "github.com/BimaAdi/fiberGormBoilerPlate/models"
 
 type LoginSerializer struct {
 	Username string `json:"username" validate:"required,email,min=6,max=32"`

@@ -1,10 +1,10 @@
 package authroutes
 
 import (
-	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/common"
-	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
-	authserializers "github.com/BimaAdi/fiberPostgresqlBoilerPlate/serializers/authSerializers"
-	authservices "github.com/BimaAdi/fiberPostgresqlBoilerPlate/services/authServices"
+	"github.com/BimaAdi/fiberGormBoilerPlate/common"
+	"github.com/BimaAdi/fiberGormBoilerPlate/models"
+	authserializers "github.com/BimaAdi/fiberGormBoilerPlate/serializers/authSerializers"
+	authservices "github.com/BimaAdi/fiberGormBoilerPlate/services/authServices"
 	"github.com/gofiber/fiber/v2"
 )
 

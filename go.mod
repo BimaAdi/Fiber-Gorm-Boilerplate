@@ -1,4 +1,4 @@
-module github.com/BimaAdi/fiberPostgresqlBoilerPlate
+module github.com/BimaAdi/fiberGormBoilerPlate
 
 go 1.17
 

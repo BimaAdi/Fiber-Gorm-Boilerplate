@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
-	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/routes"
+	"github.com/BimaAdi/fiberGormBoilerPlate/models"
+	"github.com/BimaAdi/fiberGormBoilerPlate/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 )

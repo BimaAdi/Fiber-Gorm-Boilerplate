@@ -3,9 +3,9 @@ package userroutes
 import (
 	"strconv"
 
-	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
-	userserializers "github.com/BimaAdi/fiberPostgresqlBoilerPlate/serializers/userSerializers"
-	userservices "github.com/BimaAdi/fiberPostgresqlBoilerPlate/services/userServices"
+	"github.com/BimaAdi/fiberGormBoilerPlate/models"
+	userserializers "github.com/BimaAdi/fiberGormBoilerPlate/serializers/userSerializers"
+	userservices "github.com/BimaAdi/fiberGormBoilerPlate/services/userServices"
 	"github.com/gofiber/fiber/v2"
 )
 

@@ -5,9 +5,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
-	authserializers "github.com/BimaAdi/fiberPostgresqlBoilerPlate/serializers/authSerializers"
-	authservices "github.com/BimaAdi/fiberPostgresqlBoilerPlate/services/authServices"
+	"github.com/BimaAdi/fiberGormBoilerPlate/models"
+	authserializers "github.com/BimaAdi/fiberGormBoilerPlate/serializers/authSerializers"
+	authservices "github.com/BimaAdi/fiberGormBoilerPlate/services/authServices"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )

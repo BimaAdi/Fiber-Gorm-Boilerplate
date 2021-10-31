@@ -3,7 +3,7 @@ package userserializers
 import (
 	"math"
 
-	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
+	"github.com/BimaAdi/fiberGormBoilerPlate/models"
 	"github.com/go-playground/validator/v10"
 )
 

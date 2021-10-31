@@ -3,8 +3,8 @@ package routes
 import (
 	"fmt"
 
-	authroutes "github.com/BimaAdi/fiberPostgresqlBoilerPlate/routes/authRoutes"
-	userroutes "github.com/BimaAdi/fiberPostgresqlBoilerPlate/routes/userRoutes"
+	authroutes "github.com/BimaAdi/fiberGormBoilerPlate/routes/authRoutes"
+	userroutes "github.com/BimaAdi/fiberGormBoilerPlate/routes/userRoutes"
 	"github.com/gofiber/fiber/v2"
 )
 

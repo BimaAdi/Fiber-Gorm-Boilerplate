@@ -6,9 +6,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
-	userserializers "github.com/BimaAdi/fiberPostgresqlBoilerPlate/serializers/userSerializers"
-	userservices "github.com/BimaAdi/fiberPostgresqlBoilerPlate/services/userServices"
+	"github.com/BimaAdi/fiberGormBoilerPlate/models"
+	userserializers "github.com/BimaAdi/fiberGormBoilerPlate/serializers/userSerializers"
+	userservices "github.com/BimaAdi/fiberGormBoilerPlate/services/userServices"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

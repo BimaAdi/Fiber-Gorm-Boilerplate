@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
+	"github.com/BimaAdi/fiberGormBoilerPlate/models"
 	"github.com/lestrrat-go/jwx/jwa"
 	"github.com/lestrrat-go/jwx/jwt"
 )

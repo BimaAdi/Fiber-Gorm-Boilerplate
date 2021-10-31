@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/BimaAdi/fiberPostgresqlBoilerPlate/models"
-	authserializers "github.com/BimaAdi/fiberPostgresqlBoilerPlate/serializers/authSerializers"
+	"github.com/BimaAdi/fiberGormBoilerPlate/models"
+	authserializers "github.com/BimaAdi/fiberGormBoilerPlate/serializers/authSerializers"
 	"github.com/stretchr/testify/assert"
 )
 
