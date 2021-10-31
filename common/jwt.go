@@ -23,7 +23,7 @@ func GenerateJWTToken(user models.User) ([]byte, error) {
 	return signedToken, nil
 }
 
-func ValidateJWTToken(authorizationToken string) (*models.User, error) {
+func ValidateJWTToken(ui models.UserInterface, authorizationToken string) (*models.User, error) {
 	// authorizationToken : Bearer {jwt token}
 	// Parsing header token
 	words := strings.Fields(authorizationToken)
@@ -50,13 +50,14 @@ func ValidateJWTToken(authorizationToken string) (*models.User, error) {
 	}
 
 	// Get User from payload and validate it
-	user := models.User{}
-	if err := models.DBConn.First(&user, id).Error; err != nil {
+	user, err := ui.GetDetailUser(int(id.(float64)))
+	if err != nil {
 		return nil, err
 	}
+
 	if user.Username != username {
 		return nil, errors.New("invalid token")
 	}
 
-	return &user, nil
+	return user, nil
 }

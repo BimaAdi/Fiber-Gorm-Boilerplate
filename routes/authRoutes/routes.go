@@ -34,7 +34,8 @@ func LoginRoute(c *fiber.Ctx) error {
 
 func LogoutRoute(c *fiber.Ctx) error {
 	headerAuthorization := c.Get("Authorization")
-	requestUser, err := common.ValidateJWTToken(headerAuthorization)
+	userRepo := models.User{}
+	requestUser, err := common.ValidateJWTToken(userRepo, headerAuthorization)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
 			"message": err.Error(),
